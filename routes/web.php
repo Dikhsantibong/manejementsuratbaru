@@ -17,6 +17,8 @@ use App\Http\Controllers\PergubController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DisposisiController;
 use App\Http\Controllers\KategoriKeluarController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
 
 Route::get('/', function () {
@@ -225,5 +227,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/draft-phd/sk/{id}/disposisi', [SKController::class, 'disposisi'])
         ->name('draft-phd.sk.disposisi');
+
+    // User Management Routes
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
 
 });
