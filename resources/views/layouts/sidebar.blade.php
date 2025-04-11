@@ -20,6 +20,9 @@
                 <i class="fas fa-tachometer-alt mr-2"></i> Beranda
             </a>
         </li>
+        
+        @auth
+        @if(Auth::user()->role === 'admin')
         <li class="my-2">
             <a class="flex items-center p-2 rounded-lg hover:bg-blue-100 {{ request()->routeIs('surat-masuk.*') ? 'active' : '' }}" 
                href="#">
@@ -157,6 +160,32 @@
                 </li>
             </ul>
         </li>
+        <li class="my-2">
+            <a class="flex items-center p-2 rounded-lg hover:bg-blue-100 {{ Request::is('admin/approval-requests*') ? 'active' : '' }}" 
+               href="{{ route('admin.approval-requests.index') }}">
+                <i class="fas fa-clipboard-check mr-2"></i> 
+                <span>Permissions</span>
+                @php
+                    $pendingCount = \App\Models\ApprovalRequest::where('status', 'pending')->count();
+                @endphp
+                @if($pendingCount > 0)
+                    <span class="badge bg-warning text-dark rounded-full px-2 ml-auto">{{ $pendingCount }}</span>
+                @endif
+            </a>
+        </li>
+        @endif
+        @endauth
+
+        @auth
+        @if(Auth::user()->role === 'user')
+        <li class="my-2">
+            <a class="flex items-center p-2 rounded-lg hover:bg-blue-100 {{ request()->routeIs('transaksi-surat.*') ? 'active' : '' }}" 
+               href="{{ route('transaksi-surat.index') }}">
+                <i class="fas fa-exchange-alt mr-2"></i> Transaksi Surat
+            </a>
+        </li>
+        @endif
+        @endauth
     </ul>
 </div>
 
